@@ -52,14 +52,15 @@ select{
 
 #modal{
     position: relative;
-    
     min-width: 300px;
     min-height: 250px;
     width: fit-content;
     height: fit-content;
     background-color: red;
     border-style: solid;
-    margin: 5px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -68,14 +69,11 @@ select{
     padding: 5px;
 }
 
-#modal-header{
-    display: flex;
-    align-items: center;
-}
 
 #modal-info{
     display: flex;
     flex-direction: column;
+    padding-bottom: 20px;
 }
 
 #modal-button{

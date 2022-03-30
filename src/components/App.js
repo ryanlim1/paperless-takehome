@@ -11,7 +11,6 @@ const App = () => {
     const [allSchools, setAllSchools] = useState([]);
     const [currSchools, setCurrSchools] = useState([]);
     const [page, setPage] = useState(0);
-    const [list, setList] = useState([]);
     const [isShowModal, setShowModal] = useState(false);
     const [currModal, setCurrModal] = useState({})
 
@@ -33,10 +32,8 @@ const App = () => {
         const sortedArr = [...allSchools].sort((a,b) => {
             return a.INSTNM.localeCompare(b.INSTNM);
         });
-        const alphaCurrSchools = paginate(sortedArr); 
-        setAllSchools([...sortedArr])
-        setCurrSchools([...alphaCurrSchools]);
-        console.log(currSchools);
+        setCurrSchools([...paginate(sortedArr)]);
+        setAllSchools([...sortedArr]);
     }
 
     // sort by location of user
@@ -101,6 +98,7 @@ const App = () => {
                 {!page ? "0" : page}
                 <Button text=">" onSubmit={incrementPage}/>
             </div>}
+            {isShowModal && page ? <Modal school={currModal} showModal={showModal}/> : null}
             {page ? <CollegeContainer schools={currSchools} setModal={setModal}/> : <ul> {allSchools.map((school, i) => (
                 <li key={i}>{school.INSTNM}</li>))} </ul>}
             <div className="toggle-page">
@@ -108,7 +106,6 @@ const App = () => {
                 {!page ? "0" : page}
                 <Button text=">" onSubmit={incrementPage}/>
             </div>
-            {isShowModal && page ? <Modal school={currModal} showModal={showModal}/> : null}
         </div>
 
     )
