@@ -20,7 +20,7 @@ const App = () => {
         setAllSchools([...Schools]);
     }, []);
 
-    const itemsPerPage = 10;
+    const itemsPerPage = 5;
 
     const paginate = (page) => {
         const start = (page-1)*itemsPerPage;
@@ -90,7 +90,6 @@ const App = () => {
                 setCurrModal(currSchools[i]);
             }
         }
-        console.log(currModal);
     }
 
     return(
@@ -102,8 +101,8 @@ const App = () => {
                 {!page ? "0" : page}
                 <Button text=">" onSubmit={incrementPage}/>
             </div>}
-            {page ? <CollegeContainer schools={currSchools} setModal={setModal}/> : <li> {allSchools.map((school, i) => (
-                <p key={i}>{school.INSTNM}</p>))} </li>}
+            {page ? <CollegeContainer schools={currSchools} setModal={setModal}/> : <ul> {allSchools.map((school, i) => (
+                <li key={i}>{school.INSTNM}</li>))} </ul>}
             <div className="toggle-page">
                 <Button text="<" onSubmit={decrementPage}/>
                 {!page ? "0" : page}

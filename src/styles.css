@@ -42,7 +42,8 @@ h1{
 }
 
 button{
-    margin: 5px
+    margin: 5px;
+    cursor: pointer;
 }
 
 select{
@@ -50,15 +51,14 @@ select{
 }
 
 #modal{
+    position: relative;
+    
     min-width: 300px;
     min-height: 250px;
     width: fit-content;
     height: fit-content;
-    position: relative;
-    margin-left: 50%;
-    background-color: pink;
+    background-color: red;
     border-style: solid;
-    float: left;
     margin: 5px;
     display: flex;
     flex-direction: column;
@@ -71,6 +71,11 @@ select{
 #modal-header{
     display: flex;
     align-items: center;
+}
+
+#modal-info{
+    display: flex;
+    flex-direction: column;
 }
 
 #modal-button{
@@ -86,14 +91,20 @@ select{
     background-color: pink;
 }
 
-li{
+ul{
     list-style-type: none;
     margin: 0;
     padding: 0;
     font-size: small;
     column-count: 2;
+    text-align: center;
+    column-gap: 20px;
 }
 
 p{
     font-size: medium;
+}
+
+#single-column{
+    column-count: 1;
 }
