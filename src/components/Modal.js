@@ -5,6 +5,10 @@ import Programs from "../../college_search_data/programs.json";
 
 const Modal = ({school, showModal}) => {
 
+  const convertDecimal = (num) => {
+    return parseFloat(num)*100;
+  }
+
   return (
     <div id="modal">
         <div id="modal-header">
@@ -12,11 +16,13 @@ const Modal = ({school, showModal}) => {
             <Button id="modal-button" text="x" onSubmit={showModal}/>
         </div>
         <div id="modal-info">
-            <em>City: </em>{school.CITY}
+            <span><b>City: </b>{school.CITY}</span>
+            <span><b>Zip Code: </b>{school.ZIP}</span>
+            <span><b>Admissions Rate: </b>{school.ADM_RATE !=="NULL" ? convertDecimal(school.ADM_RATE).toFixed(2)+"%" : "Not reported"}</span>
+            <span><b></b></span>
             <div id="programs-list">
-                Programs Offered: {school.PROGRAMS.length ? school.PROGRAMS.map((program,i) => [
-                    <li key={i}>{Programs[program]} </li>
-                 ]) : "-"}
+                <b>Programs Offered:</b> {school.PROGRAMS.length ? <ul id={school.PROGRAMS.length === 1 ? "single-column" : "double-column"}> {school.PROGRAMS.map((program,i) => (
+                  <li key={i}> {"- " + Programs[program]} </li>))} </ul> : "-"}
             </div>
         </div>
     </div>
