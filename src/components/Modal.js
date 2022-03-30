@@ -8,15 +8,15 @@ const Modal = ({school, showModal}) => {
   return (
     <div id="modal">
         <div id="modal-header">
-            {school.INSTNM}
-            <Button text="x" onSubmit={showModal}/>
+            <h3>{school.INSTNM}</h3>
+            <Button id="modal-button" text="x" onSubmit={showModal}/>
         </div>
         <div id="modal-info">
-            City:{school.CITY}
+            <em>City: </em>{school.CITY}
             <div id="programs-list">
-                {school.PROGRAMS.map((program,i) => [
-                    <li key={i}>{Programs[program]}</li>
-                 ])}
+                Programs Offered: {school.PROGRAMS.length ? school.PROGRAMS.map((program,i) => [
+                    <li key={i}>{Programs[program]} </li>
+                 ]) : "-"}
             </div>
         </div>
     </div>

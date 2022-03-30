@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Button = ({text, onSubmit}) => {
+const Button = ({id, text, onSubmit}) => {
   return (
     <div>
-        <button onClick={()=>onSubmit()}>{text}</button>
+        <button id={id} onClick={()=>onSubmit()}>{text}</button>
     </div>
   )
 }

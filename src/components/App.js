@@ -4,7 +4,6 @@ import Filter from "./Filter.js";
 import Button from "./Button.js";
 import Modal from "./Modal.js";
 
-import Programs from "../../college_search_data/programs.json";
 import Schools from "../../college_search_data/ma_schools.json";
 
 const App = () => {
@@ -21,7 +20,7 @@ const App = () => {
         setAllSchools([...Schools]);
     }, []);
 
-    const itemsPerPage = 5;
+    const itemsPerPage = 10;
 
     const paginate = (page) => {
         const start = (page-1)*itemsPerPage;
@@ -86,7 +85,7 @@ const App = () => {
         if(!isShowModal){
             showModal();
         }
-        for(let i = 0; i < 5; i++){
+        for(let i = 0; i < itemsPerPage; i++){
             if(school === currSchools[i].INSTNM){
                 setCurrModal(currSchools[i]);
             }
@@ -103,8 +102,8 @@ const App = () => {
                 {!page ? "0" : page}
                 <Button text=">" onSubmit={incrementPage}/>
             </div>}
-            {page ? <CollegeContainer schools={currSchools} setModal={setModal}/> : <div> {allSchools.map((school, i) => (
-                <p key={i}>{school.INSTNM}</p>))} </div>}
+            {page ? <CollegeContainer schools={currSchools} setModal={setModal}/> : <li> {allSchools.map((school, i) => (
+                <p key={i}>{school.INSTNM}</p>))} </li>}
             <div className="toggle-page">
                 <Button text="<" onSubmit={decrementPage}/>
                 {!page ? "0" : page}
