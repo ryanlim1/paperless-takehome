@@ -8,8 +8,8 @@ import Schools from "../../college_search_data/ma_schools.json";
 
 const App = () => {
 
+    const itemsPerPage = 5;
     const [allSchools, setAllSchools] = useState([]);
-    const [currSchools, setCurrSchools] = useState([]);
     const [page, setPage] = useState(0);
     const [isShowModal, setShowModal] = useState(false);
     const [currModal, setCurrModal] = useState({})
@@ -19,20 +19,12 @@ const App = () => {
         setAllSchools([...Schools]);
     }, []);
 
-    const itemsPerPage = 5;
-
-    const paginate = (page) => {
-        const start = (page-1)*itemsPerPage;
-        return allSchools.slice(start, start+itemsPerPage);
-    }
-
     // sort schools alphabetically
     const sortAlpha = () => {
         // creating a new sortedArr var to store school alphabetically by name
         const sortedArr = [...allSchools].sort((a,b) => {
             return a.INSTNM.localeCompare(b.INSTNM);
         });
-        setCurrSchools([...paginate(sortedArr)]);
         setAllSchools([...sortedArr]);
     }
 
@@ -45,7 +37,6 @@ const App = () => {
         e.preventDefault();
         if(e.target.value==="0"){
             setAllSchools([...Schools]);
-            setCurrSchools([...paginate(Schools)]);
         }
         else if(e.target.value==="1"){
             sortAlpha();
@@ -61,7 +52,6 @@ const App = () => {
             return;
         }
         setPage(newPage);
-        setCurrSchools([...paginate(newPage)]);
     }
     
 
@@ -71,7 +61,6 @@ const App = () => {
             return;
         }
         setPage(newPage);
-        setCurrSchools([...paginate(newPage)]);
     }
 
     const showModal = () => {
@@ -82,11 +71,12 @@ const App = () => {
         if(!isShowModal){
             showModal();
         }
-        for(let i = 0; i < itemsPerPage; i++){
-            if(school === currSchools[i].INSTNM){
-                setCurrModal(currSchools[i]);
+        for(let i = 0; i < allSchools.length; i++){
+            if(school === allSchools[i].INSTNM){
+                setCurrModal(allSchools[i])
             }
         }
+        console.log(isShowModal);
     }
 
     return(
@@ -98,14 +88,14 @@ const App = () => {
                 {!page ? "0" : page}
                 <Button text=">" onSubmit={incrementPage}/>
             </div>}
-            {isShowModal && page ? <Modal school={currModal} showModal={showModal}/> : null}
-            {page ? <CollegeContainer schools={currSchools} setModal={setModal}/> : <ul> {allSchools.map((school, i) => (
+            {page ? <CollegeContainer schools={allSchools} setModal={setModal} itemsPerPage={itemsPerPage} page={page}/> : <ul> {allSchools.map((school, i) => (
                 <li key={i}>{school.INSTNM}</li>))} </ul>}
             <div className="toggle-page">
                 <Button text="<" onSubmit={decrementPage}/>
                 {!page ? "0" : page}
                 <Button text=">" onSubmit={incrementPage}/>
             </div>
+            {isShowModal && page ? <Modal school={currModal} showModal={showModal}/> : null}
         </div>
 
     )
