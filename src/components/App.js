@@ -9,14 +9,25 @@ import Schools from "../../college_search_data/ma_schools.json";
 const App = () => {
 
     const itemsPerPage = 5;
+
+    const [location, setLocation] = useState({})
     const [allSchools, setAllSchools] = useState([]);
     const [page, setPage] = useState(0);
     const [isShowModal, setShowModal] = useState(false);
-    const [currModal, setCurrModal] = useState({})
+    const [currModal, setCurrModal] = useState({});
+
 
     // renders on component mount to DOM
-    useEffect(() => {
+    useEffect(async () => {
         setAllSchools([...Schools]);
+        const position =  await new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+        const { latitude, longitude } = position.coords
+        setLocation({
+            latitude, 
+            longitude
+        })
     }, []);
 
     // sort schools alphabetically
@@ -29,8 +40,12 @@ const App = () => {
     }
 
     // sort by location of user
-    const sortLocation = () => {
-        
+    async function sortLocation() {
+        const sortedArr = [...allSchools].sort((a,b) => {
+            // sort by distance formula from school to user location
+            return Math.sqrt(Math.pow(a.LATITUDE - location.latitude, 2) + Math.pow(a.LONGITUDE - location.longitude, 2)) - Math.sqrt(Math.pow(b.LATITUDE - location.latitude, 2) + Math.pow(b.LONGITUDE - location.longitude, 2));
+        });
+        setAllSchools([...sortedArr]);
     }
 
     const onFilterChange = (e) => {
@@ -76,7 +91,6 @@ const App = () => {
                 setCurrModal(allSchools[i])
             }
         }
-        console.log(isShowModal);
     }
 
     return(
