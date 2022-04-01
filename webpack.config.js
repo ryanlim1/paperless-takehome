@@ -7,6 +7,7 @@ module.exports = {
     path: path.join(__dirname, "dist"),
     filename: "bundle.js",
   },
+  resolve: { extensions: [".js", ".jsx"] },
   module: {
     rules: [
       {
@@ -14,9 +15,9 @@ module.exports = {
         use: "babel-loader",
       },
       {
-          test: /\.css$/i,
-          use: ["style-loader", "css-loader"],
-      }
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
     ],
   },
   plugins: [new HtmlWebPlugin({ template: "./src/index.html" })],
