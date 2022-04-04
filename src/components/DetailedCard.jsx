@@ -1,22 +1,28 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
 import React from "react";
+// import { parse } from "csv-parse";
+
 import Button from "./Button";
 
 import Programs from "../../college_search_data/programs.json";
 
-function Modal({ school, showModal }) {
+function DetailedCard({ school, showDetailedCard, csvData }) {
   const convertDecimal = (num) => parseFloat(num) * 100;
 
   const getURL = () => `https://${school.INSTURL}`;
 
   return (
-    <div id="modal">
-      <div id="modal-header">
+    <div id="detailed-card">
+      <div id="detailed-card-header">
         <h3>{school.INSTNM}</h3>
-        <Button id="modal-button" text="x" onSubmit={showModal} />
+        <Button
+          id="detailed-card-button"
+          text="x"
+          onSubmit={showDetailedCard}
+        />
       </div>
-      <div id="modal-info">
+      <div id="detailed-card-info">
         <span>
           <b>City: </b>
           {school.CITY}
@@ -35,6 +41,7 @@ function Modal({ school, showModal }) {
           <b>SAT Average: </b>
           {school.SAT_AVG !== "NULL" ? school.SAT_AVG : "Not reported"}
         </span>
+        <br />
         <span>
           <b>Website: </b>
           {school.INSTURL !== "NULL" ? (
@@ -61,9 +68,24 @@ function Modal({ school, showModal }) {
             "-"
           )}
         </div>
+        <br />
+        <span>
+          <b>Highest Degree Awarded: </b>
+          <div>{csvData.HIGHDEGREE[school.HIGHDEG]}</div>
+        </span>
+        <br />
+        <span>
+          <b>Locale of Institution: </b>
+          <div>{csvData.LOCALE[school.LOCALE]}</div>
+        </span>
+        <br />
+        <span>
+          <b>Carnegie Classification: </b>
+          <div>{csvData.CCSIZSET[school.CCSIZSET]}</div>
+        </span>
       </div>
     </div>
   );
 }
 
-export default Modal;
+export default DetailedCard;
