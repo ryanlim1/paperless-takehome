@@ -3,9 +3,9 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 
-function CollegeCard({ school, setModal }) {
+function CollegeCard({ school, setDetailedCard }) {
   return (
-    <div className="card" onClick={() => setModal(school.INSTNM)}>
+    <div className="card" onClick={() => setDetailedCard(school.INSTNM)}>
       <div className="school-name">{school.INSTNM}</div>
     </div>
   );

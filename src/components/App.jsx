@@ -1,22 +1,32 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import CollegeContainer from "./CollegeContainer";
 import Filter from "./Filter";
 import Button from "./Button";
-import Modal from "./Modal";
+import DetailedCard from "./DetailedCard";
 
 import Schools from "../../college_search_data/ma_schools.json";
 
 function App() {
   const itemsPerPage = 5;
 
+  const [csvData, setCsvData] = useState({});
   const [location, setLocation] = useState({});
   const [allSchools, setAllSchools] = useState([]);
   const [page, setPage] = useState(0);
-  const [isShowModal, setShowModal] = useState(false);
-  const [currModal, setCurrModal] = useState({});
+  const [showingDetailedCard, setShowingDetailedCard] = useState(false);
+  const [currDetailedCard, setCurrDetailedCard] = useState({});
 
   useEffect(async () => {
+    fetch("http://localhost:3000/")
+      .then((res) => res.json())
+      .then((data) => {
+        setCsvData({ ...data });
+      });
+
     setAllSchools([...Schools]);
+
     const position = await new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(resolve, reject);
     });
@@ -80,17 +90,17 @@ function App() {
     setPage(newPage);
   };
 
-  const showModal = () => {
-    setShowModal(!isShowModal);
+  const showDetailedCard = () => {
+    setShowingDetailedCard(!showingDetailedCard);
   };
 
-  const setModal = (school) => {
-    if (!isShowModal) {
-      showModal();
+  const setDetailedCard = (school) => {
+    if (!showingDetailedCard) {
+      showDetailedCard();
     }
     for (let i = 0; i < allSchools.length; i += 1) {
       if (school === allSchools[i].INSTNM) {
-        setCurrModal(allSchools[i]);
+        setCurrDetailedCard(allSchools[i]);
       }
     }
   };
@@ -98,7 +108,7 @@ function App() {
   return (
     <div>
       <h1>Colleges and Universities in Massachusetts</h1>
-      <Filter onChange={onFilterChange} />
+      <Filter onChange={onFilterChange} latitude={location.latitude} />
       {!page && (
         <div className="toggle-page">
           <Button text="<" onSubmit={decrementPage} />
@@ -109,15 +119,14 @@ function App() {
       {page ? (
         <CollegeContainer
           schools={allSchools}
-          setModal={setModal}
+          setDetailedCard={setDetailedCard}
           itemsPerPage={itemsPerPage}
           page={page}
         />
       ) : (
         <ul id="college-static-list">
-          {allSchools.map((school, i) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <li key={i}>{school.INSTNM}</li>
+          {allSchools.map((school) => (
+            <li key={uuidv4()}>{school.INSTNM}</li>
           ))}
         </ul>
       )}
@@ -126,8 +135,12 @@ function App() {
         {page}
         <Button text=">" onSubmit={incrementPage} />
       </div>
-      {isShowModal && page ? (
-        <Modal school={currModal} showModal={showModal} />
+      {showingDetailedCard && page ? (
+        <DetailedCard
+          school={currDetailedCard}
+          showDetailedCard={showDetailedCard}
+          csvData={csvData}
+        />
       ) : null}
     </div>
   );

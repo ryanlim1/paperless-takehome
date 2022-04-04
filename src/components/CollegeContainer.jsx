@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import CollegeCard from "./CollegeCard";
 
-function CollegeContainer({ schools, setModal, itemsPerPage, page }) {
+function CollegeContainer({ schools, setDetailedCard, itemsPerPage, page }) {
   const paginate = () => {
     const start = (page - 1) * itemsPerPage;
     return schools.slice(start, start + itemsPerPage);
@@ -10,9 +12,12 @@ function CollegeContainer({ schools, setModal, itemsPerPage, page }) {
 
   return (
     <div id="container">
-      {paginate().map((s, i) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <CollegeCard school={s} key={i} setModal={setModal} />
+      {paginate().map((s) => (
+        <CollegeCard
+          school={s}
+          key={uuidv4()}
+          setDetailedCard={setDetailedCard}
+        />
       ))}
     </div>
   );

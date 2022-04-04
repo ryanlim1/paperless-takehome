@@ -57,7 +57,7 @@ p{
     margin-top: 10px;
 }
 
-#modal{
+#detailed-card{
     position: relative;
     width: 600px;
     height: fit-content;
@@ -74,16 +74,16 @@ p{
 }
 
 
-#modal-info{
+#detailed-card-info{
     display: flex;
     flex-direction: column;
     padding-bottom: 20px;
 }
 
-#modal-button{
+#detailed-card-button{
     color: red;
     line-height: 12px;
-    font-size: 14pt;
+    font-size: 18pt;
     margin-top: 1px;
     margin-right: 2px;
     position: absolute;
