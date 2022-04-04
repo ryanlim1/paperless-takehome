@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 
-function Filter({ onChange, latitude }) {
+function Sort({ onChange, latitude }) {
   return (
     <div id="filter">
       Sort:
@@ -14,4 +14,4 @@ function Filter({ onChange, latitude }) {
   );
 }
 
-export default Filter;
+export default Sort;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import CollegeContainer from "./CollegeContainer";
-import Filter from "./Filter";
+import Sort from "./Sort";
 import Button from "./Button";
 import DetailedCard from "./DetailedCard";
 
@@ -108,7 +108,7 @@ function App() {
   return (
     <div>
       <h1>Colleges and Universities in Massachusetts</h1>
-      <Filter onChange={onFilterChange} latitude={location.latitude} />
+      <Sort onChange={onFilterChange} latitude={location.latitude} />
       {!page && (
         <div className="toggle-page">
           <Button text="<" onSubmit={decrementPage} />

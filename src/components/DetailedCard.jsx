@@ -45,7 +45,9 @@ function DetailedCard({ school, showDetailedCard, csvData }) {
         <span>
           <b>Website: </b>
           {school.INSTURL !== "NULL" ? (
-            <a href={getURL()}>{school.INSTURL}</a>
+            <a href={getURL()} target="_blank" rel="noreferrer noopener">
+              {school.INSTURL}
+            </a>
           ) : (
             "None"
           )}
@@ -71,17 +73,29 @@ function DetailedCard({ school, showDetailedCard, csvData }) {
         <br />
         <span>
           <b>Highest Degree Awarded: </b>
-          <div>{csvData.HIGHDEGREE[school.HIGHDEG]}</div>
+          <div>
+            {csvData.HIGHDEGREE[school.HIGHDEG]
+              ? csvData.HIGHDEGREE[school.HIGHDEG]
+              : "-"}
+          </div>
         </span>
         <br />
         <span>
           <b>Locale of Institution: </b>
-          <div>{csvData.LOCALE[school.LOCALE]}</div>
+          <div>
+            {csvData.LOCALE[school.LOCALE]
+              ? csvData.LOCALE[school.LOCALE]
+              : "-"}
+          </div>
         </span>
         <br />
         <span>
           <b>Carnegie Classification: </b>
-          <div>{csvData.CCSIZSET[school.CCSIZSET]}</div>
+          <div>
+            {csvData.CCSIZSET[school.CCSIZSET]
+              ? csvData.CCSIZSET[school.CCSIZSET]
+              : "-"}
+          </div>
         </span>
       </div>
     </div>
